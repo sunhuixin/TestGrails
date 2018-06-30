@@ -9,15 +9,29 @@ import grails.gorm.transactions.Transactional
 @Transactional
 class UserService {
     //保存用户
-    def saveUser(Object user) {
+    def saveUser(Object user,Integer [] roleIds) {
         def user1 = new User(user)
         user1.password = CommonUtil.getMD5(user1.password)
         User user2 = user1.save(flush:true)
         if(user2){
+            if(roleIds){
+                def roles = []
+                roleIds.each {
+                    String roleIdStr = it
+                    Integer roleId = Integer.parseInt(roleIdStr)
+                    Role role = Role.findByIdAndIsDelete(roleId,"0")
+                    if(role){
+                        roles.add(role)
+                    }
+                }
+                user1.roles = roles
+                return ResultData.getSuccessData(user1)
+            }
             return ResultData.getSuccessData(user1)
         }
         return ResultData.getFailureData(null)
     }
+
     //删除用户
     def deleteUser(Integer userId){
         User user = User.get(userId)
@@ -42,6 +56,8 @@ class UserService {
         Integer userId = Integer.parseInt(userIdStr)
         User user1 = User.findById(userId)
         if(user1){
+            String password = user.password
+            user.password = CommonUtil.getMD5(password)
             user1.properties = user
             User user2 = user1.save(flush:true)
             if(user2){
@@ -82,8 +98,25 @@ class UserService {
     }
 
     def queryByUserNameAndPassword(String userName,String password){
-        return ResultData.getSuccessData(User.findByUserNameAndPasswordAndIsDelete(userName,password,"0"))
+        return ResultData.getSuccessData(User.findByUserNameAndPasswordAndIsDelete(userName,CommonUtil.getMD5(password),"0"))
 
+    }
+
+    def queryMenuByUserId(Integer userId){
+        User user1 = User.findByIdAndIsDelete(userId,"0")
+        if(user1){
+            def roles = user1.roles
+            def menus = [:]
+            if(roles){
+                roles.each {role ->
+                    if(role.isDelete == "0"){
+                        menus.put(role.id,role.menus)
+                    }
+                }
+                return ResultData.getSuccessData(menus)
+            }
+        }
+        return ResultData.getFailureData(null)
     }
 
 }

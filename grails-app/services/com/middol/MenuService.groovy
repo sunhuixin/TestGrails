@@ -60,6 +60,7 @@ class MenuService {
                 menuTemp.path = menuItem.menuPath
                 menuTemp.icon = menuItem.menuIcon
                 menuTemp.fatherId = menuItem.fatherId
+                menuTemp.component = menuItem.component
                 menuTemp.children = getChildren(menuItem.id,menuList)
                 result.add(menuTemp)
             }

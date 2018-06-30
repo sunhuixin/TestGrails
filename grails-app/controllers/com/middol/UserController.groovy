@@ -9,7 +9,8 @@ class UserController {
         def record = request.JSON ?: params
         println request.JSON
         println params
-        render userService.saveUser(record) as JSON
+        Integer [] roleIds = record.roles
+        render userService.saveUser(record,roleIds) as JSON
 
     }
 
@@ -54,6 +55,14 @@ class UserController {
         def record = request.JSON ?: params
         String userName = record.userName
         String password = record.password
+        println userName+password
         render userService.queryByUserNameAndPassword(userName,password) as JSON
+    }
+
+    def findMenuByUserId(){
+        def record = request.JSON ?: params
+        String userIdStr = record.userId
+        Integer userId = Integer.parseInt(userIdStr)
+        render userService.queryMenuByUserId(userId) as JSON
     }
 }

@@ -8,9 +8,10 @@ import grails.gorm.transactions.Transactional
 @Transactional
 class PositionService {
 
-    def savePosition(Object position){
+    def savePosition(position){
         println position as JSON
-        String idStr = position.depart.id
+        String idStr = position.departId
+        println 11111111111111
         Integer id = Integer.parseInt(idStr)
         def position1 = new Position(positionName:position.positionName,depart:Department.findByIdAndIsDelete(id,"0"))
         println position1 as JSON
@@ -53,8 +54,8 @@ class PositionService {
 
     }
 
-    def queryByDepartment(Object department){
-        String idStr = department.depart.id
+    def queryByDepartment(department){
+        String idStr = department.id
         Integer id = Integer.parseInt(idStr)
         def depart =Department.findByIdAndIsDelete(id,"0")
         return ResultData.getSuccessData(Position.findAllByDepartAndIsDelete(depart,"0"))

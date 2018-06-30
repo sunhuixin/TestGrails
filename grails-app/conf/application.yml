@@ -97,16 +97,18 @@ hibernate:
         use_query_cache: false
 dataSource:
     pooled: true
-    jmxExport: true
+    jmxExport:
+    type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.jdbc.Driver
     username: root
-    password:
+    password: middol8801_
 
 environments:
     development:
         dataSource:
+
             dbCreate: update
-            url: "jdbc:mysql://localhost:3306/middol?characterEncoding=UTF-8"
+            url: "jdbc:mysql://rm-bp184x857665yd5yfio.mysql.rds.aliyuncs.com:3306/apqp_prod?characterEncoding=UTF-8"
             properties:
                 jmxEnabled: true
                 initialSize: 5
