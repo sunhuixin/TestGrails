@@ -108,7 +108,7 @@ environments:
         dataSource:
 
             dbCreate: update
-            url: "jdbc:mysql://rm-bp184x857665yd5yfio.mysql.rds.aliyuncs.com:3306/apqp_prod?characterEncoding=UTF-8"
+            url: "jdbc:mysql://rm-bp184x857665yd5yfio.mysql.rds.aliyuncs.com:3306/middol?characterEncoding=UTF-8&useSSL=false"
             properties:
                 jmxEnabled: true
                 initialSize: 5
