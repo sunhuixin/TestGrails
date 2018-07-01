@@ -1,12 +1,12 @@
 package com.midool
 
 class Menu {
-    Integer fatherId //菜单父id，一级菜单id为-1
+    Integer fatherId = -1 //菜单父id，一级菜单id为-1
     String menuName //菜单名称
     String menuPath //菜单路径
     String menuIcon //菜单图标路径
     String component //组件
-    String isDelete //是否删除
+    String isDelete = "0"//是否删除
     static belongsTo = Role //从属角色
     static hasMany = [roles:Role]
 

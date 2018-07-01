@@ -12,7 +12,7 @@ class MenuService {
         if(menu1.id){
             return ResultData.getSuccessData(menu1)
         }
-        return ResultData.getSuccessData(null)
+        return ResultData.getFailureData(null)
     }
 
     def deleteMenu(Integer menuId){

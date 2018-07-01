@@ -20,8 +20,9 @@ class RoleController {
     }
     //跟新角色
     def updateRole(){
-        println params
-        render roleService.updateRole(params) as JSON
+        def record = request.JSON ?: params
+        println record as JSON
+        render roleService.updateRole(record) as JSON
     }
     //查询所有的角色
     def findAllRole(){
