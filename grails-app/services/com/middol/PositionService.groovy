@@ -11,9 +11,11 @@ class PositionService {
     def savePosition(Object position){
         println position as JSON
         def position1 = new Position(position)
+        println "==="+position1.id
         println position1 as JSON
         position1.save(flush:true)
         if(position1.id){
+
             return ResultData.getSuccessData(position1)
         }
         return ResultData.getFailureData(null)
@@ -53,7 +55,9 @@ class PositionService {
     }
 
     def queryByDepartment(department){
+        println department as JSON
         String idStr = department.id
+        println department.id +"===="
         Integer id = Integer.parseInt(idStr)
         def depart =Department.findByIdAndIsDelete(id,"0")
         return ResultData.getSuccessData(Position.findAllByDepartAndIsDelete(depart,"0"))

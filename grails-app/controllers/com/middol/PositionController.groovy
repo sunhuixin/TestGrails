@@ -29,6 +29,7 @@ class PositionController{
 
     def findByDepartment(){
         def record = request.JSON ?: JSON
+        println record as JSON
         render positionService.queryByDepartment(record) as JSON
     }
 

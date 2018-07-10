@@ -8,8 +8,10 @@ class User {
     String email //邮箱
     Department department //部门
     Position position //职位
-    String isDelete = "0" //是否删除，'0'-表示否，'1'-表示是
+    String isDelete = "0" //否删除，'0'-表示否，'1'-表示是是
     static hasMany = [roles:Role]
+//    static hasOne = [depart:Department]
+
 
 
 

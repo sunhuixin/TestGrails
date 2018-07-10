@@ -7,10 +7,7 @@ class UserController {
 
     def saveUser(){
         def record = request.JSON ?: params
-        println request.JSON
-        println params
-        Integer [] roleIds = record.roles
-        render userService.saveUser(record,roleIds) as JSON
+        render userService.saveUser(record) as JSON
 
     }
 
@@ -65,4 +62,6 @@ class UserController {
         Integer userId = Integer.parseInt(userIdStr)
         render userService.queryMenuByUserId(userId) as JSON
     }
+
+
 }

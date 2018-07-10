@@ -8,25 +8,16 @@ import grails.gorm.transactions.Transactional
 
 @Transactional
 class UserService {
+
+    def roleService
+
     //保存用户
-    def saveUser(Object user,Integer [] roleIds) {
+    def saveUser(Object user) {
+        User user3 =new User()
         def user1 = new User(user)
         user1.password = CommonUtil.getMD5(user1.password)
         User user2 = user1.save(flush:true)
         if(user2){
-            if(roleIds){
-                def roles = []
-                roleIds.each {
-                    String roleIdStr = it
-                    Integer roleId = Integer.parseInt(roleIdStr)
-                    Role role = Role.findByIdAndIsDelete(roleId,"0")
-                    if(role){
-                        roles.add(role)
-                    }
-                }
-                user1.roles = roles
-                return ResultData.getSuccessData(user1)
-            }
             return ResultData.getSuccessData(user1)
         }
         return ResultData.getFailureData(null)
@@ -48,7 +39,17 @@ class UserService {
     }
     //查询所有用户
     def queryAll(){
-        return ResultData.getSuccessData(User.findAllByIsDelete("0"))
+        def list = User.findAllByIsDelete("0")
+//        def list1 = []
+//        list.each {
+//            def map = [:]
+//            it.properties.each {k,v->
+//                map[k] = v
+//            }
+//            map.id = it.id
+//            list1.push(map)
+//        }
+        return ResultData.getSuccessData(list)
     }
     //更新用户
     def updateUser(user){
@@ -96,12 +97,12 @@ class UserService {
         return ResultData.getFailureData(null)
 
     }
-
+    //跟据用户名密码查询用户
     def queryByUserNameAndPassword(String userName,String password){
         return ResultData.getSuccessData(User.findByUserNameAndPasswordAndIsDelete(userName,CommonUtil.getMD5(password),"0"))
 
     }
-
+    //跟据用户id查询角色信息
     def queryMenuByUserId(Integer userId){
         User user1 = User.findByIdAndIsDelete(userId,"0")
         if(user1){
@@ -118,5 +119,6 @@ class UserService {
         }
         return ResultData.getFailureData(null)
     }
+
 
 }
